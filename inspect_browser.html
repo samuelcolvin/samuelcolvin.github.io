@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Browser Features</title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <style>
+  body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding: 15px;
+    margin: 0;
+    background-color: #fcfbfa;
+    font-size: 90%;
+  }
+  
+  h1 {
+    font-size: 18px;
+  }
+
+  dl {
+    min-width: 400px;
+  }
+  
+  dt {
+    word-wrap: break-word;
+  }
+  
+  dd {
+    margin: 0 0 0 80px;
+    font-weight: 700;
+  }
+  
+  dd p {
+      margin: 0;
+  }
+</style>
+  </head>
+  <body>
+  <h1>Browser Features</h1>
+  <p>See source for details of some functions</p>
+  <p><a href="http://maps.apple.com/?q=51.505607,-0.146567">Test Map Link Apple Maps on iPhone</a></p>
+  <p><a href="comgooglemaps:0,0?q=51.505607,-0.146567(Place Name)">Test Map Link Google Maps on iPhone</a></p>
+  <p><a href="geo:51.505607,-0.146567?q=51.505607,-0.146567(Place Name)">Test Map Link on Android</a></p>
+  <dl><dt>Orientation: </dt><dd id="orientation">unknown</dd></dl>
+  <div id="features"></div>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script>
+    var features = [];
+    var ip_info, ajax_response_time, geo_position;
+    get_response_time();
+    get_geo_position();
+    features.push('ajax_response_time');
+    features.push("geo_position");
+    features.push('$(document).width()');
+    features.push('$(window).width();');
+    features.push('$(document).height()');
+    features.push('$(window).height()');
+    features.push("window.devicePixelRatio");
+    features.push("window.devicePixelRatio > 1 //is retina");
+    features.push("Modernizr.mq('handheld, (max-width: 900px)')");
+    features.push("Modernizr.mq('(max-width: 400px)')");
+    features.push('Modernizr.touch');
+    features.push("'ontouchstart' in document.documentElement// is touch 2");
+    features.push('Modernizr.opacity');
+    features.push('window.orientation');
+    features.push('navigator.appName');
+    features.push('navigator.userAgent');
+    features.push('ip_info.ip');
+    features.push('ip_info.country');
+    features.push('ip_info.latitude');
+    features.push('ip_info.longitude');
+    features.push('ip_info.isp');
+    features.push('ip_info.city');
+    features.push("JSON.stringify(ip_info, null, ' ')");
+    features.push("Modernizr.mq('screen')");
+    features.push("Modernizr.mq('handheld')");
+    features.push("Modernizr.mq('tty')");
+    features.push("Modernizr.mq('print')");
+    features.push("Modernizr.mq('projection')");
+    $(document).ready(write_info);
+    $(window).resize(write_info);
+    function write_info()
+    {
+      $('#features').empty();
+      $.each(features, function( i, str ) {
+        $('<dl> <dt>' + str + ' : </dt> <dd>unknown</dd></dl>').appendTo($('#features'));
+      });
+      var results = [];
+      $.each(features, function( i, str ) {
+        var evaled = 'unknown';
+        try { evaled = eval(str); }
+        catch(err) { evaled = 'error: ' + err; }
+        results.push({str: str, evaled: evaled});
+      });
+
+      $('#features').empty();
+      $.each(results, function(){
+        $('<dl> <dt>' + this.str + ' : </dt> <dd>' + this.evaled + '</dd></dl>').appendTo($('#features'));
+      });
+    }
+
+    function get_response_time(){
+      var t1=(new Date()).getTime();
+      $.ajax({
+        type:'HEAD',
+        url: '/',
+        success: function(){
+          ajax_response_time = (new Date()).getTime() - t1;
+          ajax_response_time = ajax_response_time + 'ms';
+          write_info();
+        },
+        error: function(e, t, ex) { console.log(ex);}
+                        });
+    }
+
+    function getgeoip(json)
+    {
+      ip_info = json;
+    }
+
+    function get_geo_position(){
+      geo_position = 'navigator.geolocation not yet found';
+      if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(position){
+          geo_position = JSON.stringify(position, null, ' ');
+          write_info();
+        });
+      }
+      else{
+        geo_position = 'navigator.geolocation not available';
+        write_info();
+      }
+    }
+    window.addEventListener('deviceorientation', function(event) {
+        console.log(event);
+        var data = "<p>alpha: " + event.alpha.toFixed(5)  + 
+        "</p><p>beta: " + event.beta.toFixed(5)  + 
+        "</p><p>gamma: " + event.gamma.toFixed(5) + '</p>';
+        $('#orientation').html(data);
+    });
+
+  </script>
+  <script src="http://www.telize.com/geoip?callback=getgeoip"></script>
+  </body>
+</html>
