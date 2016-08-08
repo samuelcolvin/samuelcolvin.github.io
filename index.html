@@ -22,33 +22,19 @@
     }
     body {
       overflow-x: hidden;
-      background-color: black;
+      background: #011843 url('background_1920.jpg');
       color: white;
       font-family: 'Ubuntu', sans-serif;
     }
-    .fade {
-      position: relative;
-      top: -20px;
-      height: 20px;
-      width: 100%;
-      background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,1));
-    }
-    .content {
-      position: absolute;
-      top: 0;
-      margin: auto;
-      padding-top: 500px;
-      width: 100%;
-    }
     h1, section {
-      margin: auto;
       text-align: center;
     }
     h1 {
-      font-size: 4em;
+      font-size: 3em;
       font-weight: 500;
     }
     section {
+      margin: auto;
       font-size: 1.5em;
       max-width: 700px;
     }
@@ -60,26 +46,31 @@
       color: #88f;
     }
     nav {
+      display: inline-block;
+    }
+    nav.right {
+      float: right;
       display: flex;
       justify-content: space-around;
       flex-direction: row;
+      width: 400px;
     }
     nav a {
       display: block;
-      border: 1px solid white;
-      background-color: black;
       color: white !important;
       padding: 5px 10px;
-      border-radius: 4px;
       min-width: 25%;
       margin: 12px auto;
+      text-align: center;
     }
-    @media (max-width: 700px) {
+    nav.right a{
+      border: 1px solid #aaa;
+      background-color: black;
+      border-radius: 4px;
+    }
+    @media (max-width: 600px) {
       img {
         width: 100%;
-      }
-      .content {
-        padding-top: 100px;
       }
       h1 {
         font-size: 2.5em;;
@@ -87,29 +78,36 @@
       section {
         font-size: 1em;
       }
+      nav {
+        font-size: 0.8em;
+      }
+      nav.right {
+        width: 300px;
+      }
+      nav a {
+        padding: 5px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="img">
-    <img src="flames.jpg"/>
-    <div class="fade"></div>
-  </div>
-  <div class="content">
+  <header>
+    <nav>
+      <a href="mailto:s@muelcolvin.com">s@muelcolvin.com</a>
+    </nav>
+    <nav class="right">
+      <a href="https://github.com/samuelcolvin" target="_blank">GitHub</a>
+      <a href="http://uk.linkedin.com/pub/samuel-colvin/23/315/275/" target="_blank">Linkedin</a>
+      <a href="http://stackoverflow.com/users/949890/scolvin" target="_blank">Stack Overflow</a>
+    </nav>
+  </header>
+  <section>
     <h1>Samuel Colvin</h1>
-    <section>
-      <p>Software Developer, director of <a href="https://timecruncher.com" target="_blank">TimeCruncher</a>.</p>
-      <nav>
-        <a href="https://github.com/samuelcolvin" target="_blank">GitHub</a>
-        <a href="http://uk.linkedin.com/pub/samuel-colvin/23/315/275/" target="_blank">Linkedin</a>
-        <a href="http://stackoverflow.com/users/949890/scolvin" target="_blank">Stack Overflow</a>
-      </nav>
-      <footer>
-        <p>Contact <a href="mailto:s@muelcolvin.com">s@muelcolvin.com</a>.</p>
-        <p><a href="/inspect_browser" target="_blank">inspect</a></p>
-      </footer>
-    </section>
-  </div>
+    <p>Software Developer, director of <a href="https://timecruncher.com" target="_blank">TimeCruncher</a>.</p>
+    <footer>
+      <p><a href="/inspect_browser" target="_blank">inspect</a></p>
+    </footer>
+  </section>
 </body>
 </html>
