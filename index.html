@@ -22,9 +22,24 @@
     }
     body {
       overflow-x: hidden;
-      background: #011843 url('background_1920.jpg');
       color: white;
+      background-color: #010937;
       font-family: 'Ubuntu', sans-serif;
+      height: 100%;
+    }
+    #underlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-image: url('http://scolvin.com/background_1920.jpg');
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -999;
+    }
+    .show {
+      opacity: 1 !important;
+      transition: opacity 0.25s ease-in-out;
     }
     h1, section {
       text-align: center;
@@ -63,10 +78,10 @@
       margin: 12px auto;
       text-align: center;
     }
-    nav.right a{
-      border: 1px solid #aaa;
-      background-color: black;
+    nav.right a {
+      background-color: rgba(255, 255, 255, 0.8);
       border-radius: 4px;
+      color: black !important;
     }
     @media (max-width: 600px) {
       img {
@@ -109,5 +124,13 @@
       <p><a href="/inspect_browser" target="_blank">inspect</a></p>
     </footer>
   </section>
+  <div id="underlay"></div>
+  <script>
+  window.onload = function() {
+    console.log('loaded');
+    var underlay = document.getElementById('underlay');
+    underlay.className = 'show';
+  }
+  </script>
 </body>
 </html>
