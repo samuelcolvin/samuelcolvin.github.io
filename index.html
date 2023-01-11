@@ -107,7 +107,7 @@
       <a href="https://twitter.com/samuel_colvin" target="_blank">Twitter</a>
       <a href="https://github.com/samuelcolvin" target="_blank">GitHub</a>
       <a href="http://uk.linkedin.com/pub/samuel-colvin/23/315/275/" target="_blank">Linkedin</a>
-      <a href="http://stackoverflow.com/users/949890/scolvin" target="_blank">Stack Overflow</a>
+<!--      <a href="http://stackoverflow.com/users/949890/scolvin" target="_blank">Stack Overflow</a>-->
     </nav>
   </header>
   <section>
@@ -129,19 +129,6 @@
       underlay.className = 'show';
     }
   </script>
-  <script>
-    // flarelytics analytics
-    const u = new URL(window.location.href)
-    const url_query = new URLSearchParams({
-      width: window.innerWidth.toString(),
-      height: window.innerHeight.toString(),
-      url_host: u.host,
-      url_path: u.pathname,
-      url_hash: u.hash,
-      url_query: u.search,
-      referer: document.referrer,
-    })
-    fetch(`${window.location.origin}/flarelytics.txt?${url_query.toString()}`)
-  </script>
+  <script src="/flarelytics/client.js"></script>
 </body>
 </html>
